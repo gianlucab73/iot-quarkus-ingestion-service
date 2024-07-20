@@ -10,18 +10,15 @@ import jakarta.inject.Inject;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 
 @ApplicationScoped
-public class KafkaConsumer {
+public class IotQuarkusSensorDataIngestionServiceApplication {
     @Inject
     SensorOutputMessageRepository sensorOutputMessageRepository;
 
     @Incoming("kafka-channel-in")
     public void consume(String message) {
         SensorOutputMessage sensorOutputMessage = new SensorOutputMessageMapper().readValue(message);
-        sensorOutputMessage.prePersist();
 
         sensorOutputMessageRepository.save(sensorOutputMessage);
-
-        System.out.println("Deserialized message: " + sensorOutputMessage);
     }
 
     void onStart(@Observes StartupEvent ev) {
