@@ -9,8 +9,12 @@ import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 
+import java.util.logging.Logger;
+
 @ApplicationScoped
 public class IotQuarkusSensorDataIngestionServiceApplication {
+    private final Logger LOGGER = Logger.getLogger(IotQuarkusSensorDataIngestionServiceApplication.class.getName());
+
     @Inject
     SensorOutputMessageRepository sensorOutputMessageRepository;
 
@@ -22,6 +26,10 @@ public class IotQuarkusSensorDataIngestionServiceApplication {
     }
 
     void onStart(@Observes StartupEvent ev) {
-        sensorOutputMessageRepository.createHypertable();
+        try {
+            sensorOutputMessageRepository.createHypertable();
+        } catch (Exception e) {
+            LOGGER.warning("Error creating hypertable: " + e.getMessage());
+        }
     }
 }
