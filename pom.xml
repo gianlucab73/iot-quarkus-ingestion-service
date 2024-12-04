@@ -76,6 +76,10 @@
             <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
             <version>3.11.1</version>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jackson</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
